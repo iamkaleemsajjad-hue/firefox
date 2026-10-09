@@ -1,0 +1,7 @@
+obj-*/
+_virtualenvs/
+.mozbuild/
+*.pyc
+__pycache__/
+.DS_Store
+install-nightly-binary.ps1

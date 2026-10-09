@@ -1,0 +1,6 @@
+# Artifact build — downloads prebuilt C++/Rust binaries from Mozilla CI.
+# Only front-end JS/HTML/CSS files are compiled locally.
+# No C compiler (Clang/MSVC) required.
+ac_add_options --enable-artifact-builds
+ac_add_options --disable-compile-environment
+

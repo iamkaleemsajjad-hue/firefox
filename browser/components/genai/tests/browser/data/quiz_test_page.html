@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Assist — Local Test Page</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      background: #0f1117;
+      color: #e0e0f0;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #8898e8;
+      margin: 0 0 6px;
+    }
+
+    .subtitle {
+      color: #607090;
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+
+    .shortcut-table {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 32px;
+      font-size: 13px;
+      color: #a0b0d0;
+    }
+
+    .shortcut-table table { border-collapse: collapse; width: 100%; }
+    .shortcut-table td { padding: 3px 12px 3px 0; }
+    .shortcut-table td:first-child { font-family: monospace; color: #78e8a0; white-space: nowrap; }
+
+    h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #6070a8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 28px 0 12px;
+    }
+
+    .question-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .question-block p {
+      margin: 0 0 14px;
+      color: #c8d0f0;
+    }
+
+    fieldset {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 0;
+    }
+
+    legend {
+      padding: 0 8px;
+      color: #c8d0f0;
+      font-weight: 600;
+    }
+
+    label {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 5px 0;
+      cursor: pointer;
+      color: #b0b8d8;
+    }
+
+    label:hover { color: #e0e8ff; }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: #6878e8;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.06);
+      color: #e0e0f0;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      margin-top: 6px;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(100,120,220,0.5);
+      background: rgba(100,120,220,0.08);
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    select option { background: #1a1a2e; }
+
+    .dynamic-btn {
+      margin-top: 12px;
+      padding: 6px 16px;
+      border-radius: 6px;
+      border: 1px solid rgba(100,120,220,0.4);
+      background: rgba(100,120,220,0.12);
+      color: #8898e8;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .dynamic-btn:hover { background: rgba(100,120,220,0.25); }
+
+    #dynamic-question-container { margin-top: 14px; }
+
+    .img-caption {
+      font-size: 12px;
+      color: #607090;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .react-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      margin: 5px 0;
+      cursor: pointer;
+      color: #b0b8d8;
+      user-select: none;
+    }
+
+    .react-option:hover { background: rgba(100,120,220,0.12); }
+    .react-option.selected {
+      border-color: rgba(100,120,220,0.5);
+      background: rgba(100,120,220,0.18);
+      color: #c8d8ff;
+    }
+
+    .react-option::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+
+    .react-option.selected::before {
+      background: #6878e8;
+      border-color: #6878e8;
+    }
+
+    pre {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 12px;
+      color: #a0e0a0;
+      overflow-x: auto;
+      margin: 10px 0 0;
+    }
+
+    .notice {
+      background: rgba(100,120,220,0.1);
+      border: 1px solid rgba(100,120,220,0.25);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #a0a8d0;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Quiz Assist — Test Page</h1>
+<p class="subtitle">Use the keyboard shortcuts below to test the native Firefox AI quiz assistant.</p>
+
+<div class="shortcut-table">
+  <table>
+    <tr><td>Alt+A</td><td>Analyze the current question and get an AI answer</td></tr>
+    <tr><td>Alt+S</td><td>Toggle the answer overlay on/off</td></tr>
+    <tr><td>Alt+Shift (hold)</td><td>Temporarily reveal the dimmed overlay</td></tr>
+    <tr><td>Alt+D</td><td>Dismiss / close the answer overlay</td></tr>
+    <tr><td>Alt+Shift+H</td><td>Open the answer history sidebar</td></tr>
+  </table>
+</div>
+
+<div class="notice">
+  <strong>API Key Setup:</strong> Open <code>about:config</code> and set
+  <code>browser.quizAssist.apiProvider</code> to <code>openai</code>, <code>gemini</code>, or <code>anthropic</code>,
+  then set <code>browser.quizAssist.apiKey</code> to your key.
+  Without a key the question is forwarded to the GenAI chat sidebar.
+  Set <code>browser.quizAssist.autoFill</code> to <code>true</code> to enable automatic form filling.
+</div>
+
+<!-- ================================================================== -->
+<h2>1. Single-choice MCQ (fieldset)</h2>
+<div class="question-block">
+  <fieldset>
+    <legend>Which planet is closest to the Sun?</legend>
+    <label><input type="radio" name="q1" value="Venus" id="q1a" /> Venus</label>
+    <label><input type="radio" name="q1" value="Mercury" id="q1b" /> Mercury</label>
+    <label><input type="radio" name="q1" value="Mars" id="q1c" /> Mars</label>
+    <label><input type="radio" name="q1" value="Earth" id="q1d" /> Earth</label>
+  </fieldset>
+</div>
+
+<!-- ================================================================== -->
+<h2>2. Multiple-choice MCQ (checkboxes)</h2>
+<div class="question-block">
+  <fieldset>
+    <legend>Which of the following are prime numbers? (Select all that apply)</legend>
+    <label><input type="checkbox" name="q2" value="2" id="q2a" /> 2</label>
+    <label><input type="checkbox" name="q2" value="4" id="q2b" /> 4</label>
+    <label><input type="checkbox" name="q2" value="7" id="q2c" /> 7</label>
+    <label><input type="checkbox" name="q2" value="9" id="q2d" /> 9</label>
+    <label><input type="checkbox" name="q2" value="13" id="q2e" /> 13</label>
+  </fieldset>
+</div>
+
+<!-- ================================================================== -->
+<h2>3. True / False question</h2>
+<div class="question-block">
+  <fieldset>
+    <legend>The speed of light in a vacuum is approximately 300,000 km/s.</legend>
+    <label><input type="radio" name="q3" value="True" id="q3t" /> True</label>
+    <label><input type="radio" name="q3" value="False" id="q3f" /> False</label>
+  </fieldset>
+</div>
+
+<!-- ================================================================== -->
+<h2>4. Fill-in-the-blank (short answer)</h2>
+<div class="question-block">
+  <label for="q4">
+    The chemical symbol for gold is _____.
+    <input type="text" id="q4" name="q4" placeholder="Your answer…" />
+  </label>
+</div>
+
+<!-- ================================================================== -->
+<h2>5. Long-answer / essay question</h2>
+<div class="question-block">
+  <label for="q5">
+    Explain the greenhouse effect and its impact on global climate change.
+    <textarea id="q5" name="q5" placeholder="Write your answer here…" rows="5"></textarea>
+  </label>
+</div>
+
+<!-- ================================================================== -->
+<h2>6. Dropdown selection</h2>
+<div class="question-block">
+  <label for="q6">
+    Which sorting algorithm has the best average-case time complexity?
+    <select id="q6" name="q6">
+      <option value="">— Select an answer —</option>
+      <option value="bubble">Bubble Sort — O(n²)</option>
+      <option value="merge">Merge Sort — O(n log n)</option>
+      <option value="insertion">Insertion Sort — O(n²)</option>
+      <option value="selection">Selection Sort — O(n²)</option>
+    </select>
+  </label>
+</div>
+
+<!-- ================================================================== -->
+<h2>7. Mathematical question</h2>
+<div class="question-block">
+  <fieldset>
+    <legend>If f(x) = 3x² − 2x + 5, what is f'(x)?</legend>
+    <label><input type="radio" name="q7" value="A" id="q7a" /> 6x − 2</label>
+    <label><input type="radio" name="q7" value="B" id="q7b" /> 3x − 2</label>
+    <label><input type="radio" name="q7" value="C" id="q7c" /> 6x + 5</label>
+    <label><input type="radio" name="q7" value="D" id="q7d" /> 6x²  − 2</label>
+  </fieldset>
+</div>
+
+<!-- ================================================================== -->
+<h2>8. Programming question</h2>
+<div class="question-block">
+  <p>What does the following Python snippet print?</p>
+  <pre>data = [1, 2, 3, 4, 5]
+print(sum(x ** 2 for x in data if x % 2 == 0))</pre>
+  <label for="q8">
+    Your answer:
+    <input type="text" id="q8" name="q8" placeholder="Type the output…" />
+  </label>
+</div>
+
+<!-- ================================================================== -->
+<h2>9. Image-based question</h2>
+<div class="question-block">
+  <fieldset>
+    <legend>
+      Identify the type of graph shown below.
+      <!-- Inline SVG simulating a bar chart -->
+      <svg width="200" height="100" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"
+           aria-label="Bar chart showing four bars of different heights"
+           style="display:block;margin:10px 0;border:1px solid rgba(255,255,255,0.1);border-radius:4px;background:#111">
+        <rect x="20" y="40" width="30" height="50" fill="#6878e8"/>
+        <rect x="60" y="20" width="30" height="70" fill="#6878e8"/>
+        <rect x="100" y="55" width="30" height="35" fill="#6878e8"/>
+        <rect x="140" y="10" width="30" height="80" fill="#6878e8"/>
+      </svg>
+    </legend>
+    <label><input type="radio" name="q9" value="bar" id="q9a" /> Bar chart</label>
+    <label><input type="radio" name="q9" value="pie" id="q9b" /> Pie chart</label>
+    <label><input type="radio" name="q9" value="line" id="q9c" /> Line graph</label>
+    <label><input type="radio" name="q9" value="scatter" id="q9d" /> Scatter plot</label>
+  </fieldset>
+</div>
+
+<!-- ================================================================== -->
+<h2>10. ARIA-role based question (React-style)</h2>
+<div class="question-block">
+  <p id="q10-label">Which HTTP method is idempotent AND safe?</p>
+  <div role="radiogroup" aria-labelledby="q10-label" id="q10-group">
+    <div class="react-option" role="radio" aria-checked="false" tabindex="0" data-value="POST">POST</div>
+    <div class="react-option" role="radio" aria-checked="false" tabindex="0" data-value="GET">GET</div>
+    <div class="react-option" role="radio" aria-checked="false" tabindex="0" data-value="PUT">PUT</div>
+    <div class="react-option" role="radio" aria-checked="false" tabindex="0" data-value="PATCH">PATCH</div>
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<h2>11. Dynamically loaded question</h2>
+<div class="question-block">
+  <p>This question appears after a simulated network delay:</p>
+  <button class="dynamic-btn" id="load-dynamic-btn">Load Question</button>
+  <div id="dynamic-question-container"></div>
+</div>
+
+<!-- ================================================================== -->
+<h2>12. Ambiguous question (no answer controls)</h2>
+<div class="question-block">
+  <p>Discuss the trade-offs between microservices and monolithic architectures
+     in the context of a high-traffic e-commerce platform.</p>
+  <textarea id="q12" name="q12" placeholder="Write your answer here…" rows="4"></textarea>
+</div>
+
+<script>
+  /* React-style ARIA radio group interaction */
+  document.getElementById("q10-group").addEventListener("click", e => {
+    const opt = e.target.closest(".react-option");
+    if (!opt) return;
+    const group = e.currentTarget;
+    group.querySelectorAll(".react-option").forEach(o => {
+      o.classList.remove("selected");
+      o.setAttribute("aria-checked", "false");
+    });
+    opt.classList.add("selected");
+    opt.setAttribute("aria-checked", "true");
+  });
+
+  /* Dynamic question loader (simulates AJAX/React lazy load) */
+  document.getElementById("load-dynamic-btn").addEventListener("click", () => {
+    const container = document.getElementById("dynamic-question-container");
+    container.textContent = "Loading…";
+    setTimeout(() => {
+      container.innerHTML = `
+        <fieldset style="border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;margin-top:10px">
+          <legend style="color:#c8d0f0;font-weight:600;padding:0 8px">
+            What is the time complexity of binary search on a sorted array of n elements?
+          </legend>
+          <label style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;cursor:pointer;color:#b0b8d8">
+            <input type="radio" name="qdyn" value="On" id="qdyna" style="margin-top:3px" /> O(n)
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;cursor:pointer;color:#b0b8d8">
+            <input type="radio" name="qdyn" value="Ologn" id="qdynb" style="margin-top:3px" /> O(log n)
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;cursor:pointer;color:#b0b8d8">
+            <input type="radio" name="qdyn" value="On2" id="qdync" style="margin-top:3px" /> O(n²)
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:8px;margin:5px 0;cursor:pointer;color:#b0b8d8">
+            <input type="radio" name="qdyn" value="O1" id="qdynd" style="margin-top:3px" /> O(1)
+          </label>
+        </fieldset>`;
+    }, 1200);
+  });
+</script>
+</body>
+</html>
